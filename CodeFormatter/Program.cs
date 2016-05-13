@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeFormatter.Rules.LineRules;
 
 namespace CodeFormatter
 {
@@ -6,7 +7,7 @@ namespace CodeFormatter
   {
     static void Main(string[] args)
     {
-      var dir = args[0];
+       var dir = args[0];
       var format = args[1];
       Console.WriteLine($"formatting files with .{format} extension in {dir}");
       new Formatter(dir, format).Format();

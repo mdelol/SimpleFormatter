@@ -47,6 +47,7 @@
     <Compile Include="Rules\IFileRule.cs" />
     <Compile Include="Rules\ILineRule.cs" />
     <Compile Include="Rules\IRule.cs" />
+    <Compile Include="Rules\LineRules\CommaRule.cs" />
     <Compile Include="Rules\LineRules\FigureBraceRule.cs" />
   </ItemGroup>
   <ItemGroup>

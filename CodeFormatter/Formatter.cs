@@ -13,7 +13,7 @@ namespace CodeFormatter
     private readonly string _dir;
     private readonly string _extension;
     private readonly List<IFileRule> _fileRules = new List<IFileRule> {new EmptyLineRule()};
-    private readonly List<ILineRule> _lineRules = new List<ILineRule> {new FigureBraceRule()};
+    private readonly List<ILineRule> _lineRules = new List<ILineRule> {new FigureBraceRule(), new CommaRule()};
 
     public Formatter(string dir, string extension)
     {

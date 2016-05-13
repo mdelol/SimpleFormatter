@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="RIDER_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+    </content>
+    <content url="file:///mnt/hdd/home/krickiy_sp/RiderProjects/CodeFormatter/CodeFormatter/Formatter.cs">
+      <sourceFolder url="file:///mnt/hdd/home/krickiy_sp/RiderProjects/CodeFormatter/CodeFormatter/Formatter.cs" isTestSource="false" />
+    </content>
+    <content url="file:///mnt/hdd/home/krickiy_sp/RiderProjects/CodeFormatter/CodeFormatter/Program.cs">
+      <sourceFolder url="file:///mnt/hdd/home/krickiy_sp/RiderProjects/CodeFormatter/CodeFormatter/Program.cs" isTestSource="false" />
+    </content>
+    <content url="file:///mnt/hdd/home/krickiy_sp/RiderProjects/CodeFormatter/CodeFormatter/Rules/FileRules/EmptyLineRule.cs">
+      <sourceFolder url="file:///mnt/hdd/home/krickiy_sp/RiderProjects/CodeFormatter/CodeFormatter/Rules/FileRules/EmptyLineRule.cs" isTestSource="false" />
+    </content>
+    <content url="file:///mnt/hdd/home/krickiy_sp/RiderProjects/CodeFormatter/CodeFormatter/Rules/LineRules/CommaRule.cs">
+      <sourceFolder url="file:///mnt/hdd/home/krickiy_sp/RiderProjects/CodeFormatter/CodeFormatter/Rules/LineRules/CommaRule.cs" isTestSource="false" />
+    </content>
+    <content url="file:///mnt/hdd/home/krickiy_sp/RiderProjects/CodeFormatter/CodeFormatter/Rules/LineRules/FigureBraceRule.cs">
+      <sourceFolder url="file:///mnt/hdd/home/krickiy_sp/RiderProjects/CodeFormatter/CodeFormatter/Rules/LineRules/FigureBraceRule.cs" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
