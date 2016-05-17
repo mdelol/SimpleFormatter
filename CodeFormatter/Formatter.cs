@@ -49,7 +49,7 @@ namespace CodeFormatter
         {
           if (rule.Matches(x))
           {
-            Log($"{file.Split('/').Last()}: applying {rule} to '{x}'");
+            Log($"{file.Split('/').Last()}: applying {rule} to '{x.Trim()}'");
             return rule.Apply(x);
           }
           return x;
