@@ -1,19 +1,19 @@
 ﻿using System;
-using CodeFormatter.Rules.LineRules;
 
 namespace CodeFormatter
 {
-  class Program
-  {
-    static void Main(string[] args)
+    //@TODO add analysis without fixing problems
+    class Program
     {
-       var dir = args[0];
-      var format = args[1];
-      Console.WriteLine($"formatting files with .{format} extension in {dir}");
-      new Formatter(dir, format).Format();
-      Console.WriteLine("done");
+        static void Main(string[] args)
+        {
+            var path = args[0];
+            var extension = args[1];
+            Console.WriteLine($"formatting files with .{extension} extension in {path}");
+            new Formatter(path, extension).Format();
+            Console.WriteLine("done");
+        }
     }
-  }
 }
 
 

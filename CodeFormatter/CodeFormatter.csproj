@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>F7F268ED-600B-445E-B483-3949C530ACEF</ProjectGuid>
+    <ProjectGuid>{F7F268ED-600B-445E-B483-3949C530ACEF}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CodeFormatter</RootNamespace>
@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,11 +51,7 @@
     <Compile Include="Rules\LineRules\CommaRule.cs" />
     <Compile Include="Rules\LineRules\FigureBraceRule.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Rules" />
-    <Folder Include="Rules\FileRules" />
-    <Folder Include="Rules\LineRules" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

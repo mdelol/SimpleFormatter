@@ -1,77 +1,96 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using CodeFormatter.Rules;
-using CodeFormatter.Rules.FileRules;
-using CodeFormatter.Rules.LineRules;
 
 namespace CodeFormatter
 {
-  class Formatter
-  {
-    private readonly string _dir;
-    private readonly string _extension;
-    private readonly List<IFileRule> _fileRules = new List<IFileRule> {new EmptyLineRule()};
-    private readonly List<ILineRule> _lineRules = new List<ILineRule> {new FigureBraceRule(), new CommaRule()};
-
-    public Formatter(string dir, string extension)
+    class Formatter
     {
-      _dir = dir;
-      _extension = extension;
-    }
+        private readonly string _directoryPath;
+        private readonly string _extension;
 
-    public void Format()
-    {
-      HandleDir(_dir);
-    }
+        [ImportMany(typeof(IRule))]
+        private List<IRule> Rules { get; set; }
 
-    private void HandleDir(string dir)
-    {
-      var files = Directory.GetFiles(dir);
-      var filteredFiles = files.Where(x => x.EndsWith(_extension)).ToList();
-      foreach (var s in filteredFiles)
-      {
-        FormatFile(s);
-      }
+        private readonly List<ILineRule> _lineRules; 
+        private readonly List<IFileRule> _fileRules;
 
-      Directory.GetDirectories(dir).ToList().ForEach(HandleDir);
 
-    }
-
-    private void FormatFile(string file)
-    {
-      var readAllLines = File.ReadAllLines(file).ToList();
-
-      foreach (var rule in _lineRules.Where(x=>x.ApplicableTo.Contains(_extension)))
-      {
-        readAllLines = readAllLines.Select(x =>
+        public Formatter(string directoryPath, string extension)
         {
-          if (rule.Matches(x))
-          {
-            Log($"{file.Split('/').Last()}: applying {rule} to '{x.Trim()}'");
-            return rule.Apply(x);
-          }
-          return x;
-        }).ToList();
-      }
+            _directoryPath = directoryPath;
+            _extension = extension;
 
-      foreach (var rule in _fileRules.Where(x=>x.ApplicableTo.Contains(_extension)))
-      {
-        if (rule.Matches(readAllLines))
-        {
-          Log($"{file.Split('/').Last()}: applying {rule}");
-          readAllLines = rule.Apply(readAllLines);
+            ImportRules();
+
+            _fileRules = Rules.OfType<IFileRule>().Where(x => x.ApplicableTo.Contains(_extension)).ToList();
+            _lineRules = Rules.OfType<ILineRule>().Where(x => x.ApplicableTo.Contains(_extension)).ToList();
         }
-      }
 
-      File.Delete(file);
-      File.WriteAllLines(file, readAllLines);
-    }
+        private void ImportRules()
+        {
+            var catalog = new AggregateCatalog();
+            catalog.Catalogs.Add(new AssemblyCatalog(typeof (Program).Assembly));
+            var container = new CompositionContainer(catalog);
+            container.ComposeParts(this);
+        }
 
-    private void Log(string str)
-    {
-      Console.WriteLine(str);
+        public void Format()
+        {
+            HandleDirectory(_directoryPath);
+        }
+
+        private void HandleDirectory(string directoryPath)
+        {
+            var files = Directory.GetFiles(directoryPath);
+            var filteredFiles = files.Where(x => x.EndsWith(_extension)).ToList();
+            foreach (var s in filteredFiles)
+            {
+                FormatFile(s);
+            }
+
+            foreach (var directory in Directory.GetDirectories(directoryPath))
+            {
+                HandleDirectory(directory);
+            }
+        }
+
+        private void FormatFile(string file)
+        {
+            var readAllLines = File.ReadAllLines(file).ToList();
+
+            var fileName = Path.GetFileName(file);
+
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var rule in _lineRules)
+            {
+                readAllLines = readAllLines.Select(x =>
+                {
+                    if (!rule.Matches(x)) return x;
+                    Log($"{fileName}: applying {rule} to '{x.Trim()}'");
+                    return rule.Apply(x);
+                }).ToList();
+            }
+
+            // ReSharper disable once LoopCanBePartlyConvertedToQuery
+            foreach (var rule in _fileRules)
+            {
+                if (!rule.Matches(readAllLines)) continue;
+                Log($"{fileName}: applying {rule}");
+                readAllLines = rule.Apply(readAllLines);
+            }
+
+            File.Delete(file);
+            File.WriteAllLines(file, readAllLines);
+        }
+
+        private static void Log(string str)
+        {
+            Console.WriteLine(str);
+        }
     }
-  }
 }
